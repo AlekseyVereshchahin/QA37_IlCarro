@@ -13,22 +13,30 @@ public class HelperUser extends HelperBase {
 
     }
 
-    public void fillLoginForm(String email, String password){
-        type(By.cssSelector("#email"),email);
-        type(By.cssSelector("#password"),password);
+    public void fillLoginForm(String email, String password) {
+        type(By.cssSelector("#email"), email);
+        type(By.cssSelector("#password"), password);
     }
 
-    public void submitLogin(){
+    public void submitLogin() {
         click(By.cssSelector("button[type='submit']"));
-        click(By.cssSelector("button.positive-button.ng-star-inserted"));
 
     }
 
-    public boolean isLogged(){
+    public String getMessage(){
+        pause(2000);
+        return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
+    }
+
+    public void closeWindow() {
+        click(By.xpath("//button[text()='Ok']"));
+    }
+
+    public boolean isLogged() {
         return isElementPresent(By.cssSelector(".ng-star-inserted[href='logout']"));
     }
 
-    public void logout(){
+    public void logout() {
         click(By.cssSelector(".ng-star-inserted[href='logout']"));
     }
 
