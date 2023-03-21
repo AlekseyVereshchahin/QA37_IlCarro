@@ -2,6 +2,10 @@ package manager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class HelperUser extends HelperBase {
     public HelperUser(WebDriver wd) {
@@ -23,8 +27,11 @@ public class HelperUser extends HelperBase {
 
     }
 
-    public String getMessage(){
-        pause(2000);
+    public String getMessage() {
+        //pause(2000);
+        WebDriverWait wait = new WebDriverWait(wd, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(wd.findElement(By.cssSelector(".dialog-container"))));
+
         return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
     }
 
@@ -33,11 +40,11 @@ public class HelperUser extends HelperBase {
     }
 
     public boolean isLogged() {
-        return isElementPresent(By.cssSelector(".ng-star-inserted[href='logout']"));
+        return isElementPresent(By.xpath("//a[text() = ' Logout ']"));
     }
 
     public void logout() {
-        click(By.cssSelector(".ng-star-inserted[href='logout']"));
+        click(By.xpath("//a[text() = ' Logout ']"));
     }
 
 }

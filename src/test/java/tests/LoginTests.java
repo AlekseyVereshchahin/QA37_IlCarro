@@ -18,8 +18,8 @@ public class LoginTests extends TestBase{
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm("amaverik281@gmail.com","Aaaaaaa1!");
         app.getHelperUser().submitLogin();
-        Assert.assertTrue(app.getHelperUser().isLogged());
-        app.getHelperUser().closeWindow();
+        Assert.assertEquals(app.getHelperUser().getMessage(),"Logged in success");
+
     }
     @Test
     public void loginSuccessModel(){
@@ -28,18 +28,18 @@ public class LoginTests extends TestBase{
         app.getHelperUser().submitLogin();
         Assert.assertEquals(app.getHelperUser().getMessage(),"Logged in success");
 
-        //Assert.assertTrue(app.getHelperUser().isLogged());
-    }
-
-    @Test
-    public void loginWrongEmail(){
 
     }
 
-    @Test
-    public void loginWrongPassword(){
-
-    }
+//    @Test
+//    public void loginWrongEmail(){
+//
+//    }
+//
+//    @Test
+//    public void loginWrongPassword(){
+//
+//    }
 
     @AfterMethod
     public void postCondition(){
