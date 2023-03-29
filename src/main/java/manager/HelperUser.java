@@ -36,7 +36,7 @@ public class HelperUser extends HelperBase {
     }
 
     public String getMessage() {
-        //pause(2000);
+        pause(2000);
         WebDriverWait wait = new WebDriverWait(wd, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOf(wd.findElement(By.cssSelector(".dialog-container"))));
 
@@ -59,7 +59,6 @@ public class HelperUser extends HelperBase {
 
     public String getErrorText() {
         return wd.findElement(By.cssSelector("div.error")).getText();
-
     }
 
     public boolean isYallaButtonNotActive() {
@@ -84,11 +83,11 @@ public class HelperUser extends HelperBase {
     }
 
     public void checkPolicy() {//not work with one stroke sign
-      //  click(By.id("terms-of-use")); //не работает --> 0х0
+        //  click(By.id("terms-of-use")); //не работает --> 0х0
         click(By.cssSelector("label[for='terms-of-use']"));
 
-        JavascriptExecutor js = (JavascriptExecutor) wd;
-        js.executeScript("document.querySelector('#terms-of-use).click();");
+//        JavascriptExecutor js = (JavascriptExecutor) wd;
+//        js.executeScript("document.querySelector('#terms-of-use).click();");
 
     }
 
@@ -102,6 +101,11 @@ public class HelperUser extends HelperBase {
         int xOffSet = -w / 2;
         Actions actions = new Actions(wd);
         actions.moveToElement(label, xOffSet, 0).click().release().perform();
+    }
+
+    public String getErrorRegisteredUser() {
+        return wd.findElement(By.cssSelector("h2.message")).getText();
+
     }
 }
 
