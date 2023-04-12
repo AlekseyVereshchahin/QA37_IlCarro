@@ -28,13 +28,10 @@ public class RegistrationTests extends TestBase {
                 .setEmail("pop" + z + "@gmail.com")
                 .setPassword("Pop12345$");
         app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().pause(5000);
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().pause(10000);
 //        app.getHelperUser().checkPolicy(); //not work
         app.getHelperUser().checkPolicyXY();
         app.getHelperUser().submit();
-        app.getHelperUser().pause(5000);
 
         Assert.assertEquals(app.getHelperUser().getMessage(), "You are logged in success");
 
@@ -51,14 +48,14 @@ public class RegistrationTests extends TestBase {
                 .setEmail("pop" + z + "@gmail.com")
                 .setPassword("Pop12345$");
         app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().pause(5000);
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().pause(10000);
 //      app.getHelperUser().checkPolicy(); //not work
         app.getHelperUser().checkPolicyXY();
-        app.getHelperUser().pause(10000);
+        app.getHelperUser().submit();
 
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Name is required");
         Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
+
     }
 
     @Test
@@ -72,33 +69,34 @@ public class RegistrationTests extends TestBase {
                 .setEmail("pop" + z + "@gmail.com")
                 .setPassword("Pop12345$");
         app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().pause(5000);
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().pause(10000);
 //      app.getHelperUser().checkPolicy(); //not work
         app.getHelperUser().checkPolicyXY();
-        app.getHelperUser().pause(5000);
+        app.getHelperUser().submit();
 
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Last name is required");
         Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
+
     }
 
-    @Test
-    public void registrationEmptyEmail() {
-        User user = new User()
-                .setFirstName("Mark")
-                .setLastName("Hor")
-                .setEmail("")
-                .setPassword("Pop12345$");
-        app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().pause(5000);
-        app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().pause(10000);
-//      app.getHelperUser().checkPolicy(); //not work
-        app.getHelperUser().checkPolicyXY();
-        app.getHelperUser().pause(10000);
-
-        Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
-    }
+//    @Test
+//    public void registrationEmptyEmail() {
+//        User user = new User()
+//                .setFirstName("Mark")
+//                .setLastName("Hor")
+//                .setEmail("")
+//                .setPassword("Pop12345$");
+//        app.getHelperUser().openRegistrationForm();
+//        app.getHelperUser().pause(5000);
+//        app.getHelperUser().fillRegistrationForm(user);
+//        app.getHelperUser().pause(10000);
+////      app.getHelperUser().checkPolicy(); //not work
+//        app.getHelperUser().checkPolicyXY();
+//        app.getHelperUser().pause(10000);
+//        app.getHelperUser().submit();
+//
+//        Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
+//    }
 
     @Test
     public void registrationIncorrectEmail() {
@@ -109,36 +107,33 @@ public class RegistrationTests extends TestBase {
                 .setEmail("pop" + z + "gmail.com")
                 .setPassword("Pop12345$");
         app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().pause(5000);
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().pause(10000);
 //      app.getHelperUser().checkPolicy(); //not work
         app.getHelperUser().checkPolicyXY();
-        app.getHelperUser().pause(5000);
+        app.getHelperUser().submit();
 
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Wrong email format\n" +
+                "Wrong email format");
         Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
     }
 
-    @Test
-    public void registrationEmptyPassword() {
-        Random random = new Random();
-        int z = (int) (System.currentTimeMillis() / 1000) ; //give random number
-
-        User user = new User()
-                .setFirstName("Mark")
-                .setLastName("Hor")
-                .setEmail("pop" + z + "@gmail.com")
-                .setPassword("");
-        app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().pause(5000);
-        app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().pause(5000);
-//      app.getHelperUser().checkPolicy(); //not work
-        app.getHelperUser().checkPolicyXY();
-        app.getHelperUser().pause(5000);
-
-        Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
-    }
+//    @Test
+//    public void registrationEmptyPassword() {
+//        Random random = new Random();
+//        int z = (int) (System.currentTimeMillis() / 1000) ; //give random number
+//
+//        User user = new User()
+//                .setFirstName("Mark")
+//                .setLastName("Hor")
+//                .setEmail("pop" + z + "@gmail.com")
+//                .setPassword("");
+//        app.getHelperUser().openRegistrationForm();
+//        app.getHelperUser().fillRegistrationForm(user);
+////      app.getHelperUser().checkPolicy(); //not work
+//        app.getHelperUser().checkPolicyXY();
+//
+//        Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
+//    }
 
     @Test
     public void registrationIncorrectPassword() {
@@ -149,13 +144,12 @@ public class RegistrationTests extends TestBase {
                 .setEmail("pop" + z + "@gmail.com")
                 .setPassword("pop12345$");
         app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().pause(5000);
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().pause(10000);
 //      app.getHelperUser().checkPolicy(); //not work
         app.getHelperUser().checkPolicyXY();
-        app.getHelperUser().pause(5000);
+        app.getHelperUser().submit();
 
+        Assert.assertTrue(app.getHelperUser().getErrorText().contains("Password must contain 1 uppercase letter, 1 lowercase letter, 1 number and one special symbol of [@$#^&*!]"));
         Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
     }
 

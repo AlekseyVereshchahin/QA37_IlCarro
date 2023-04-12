@@ -30,18 +30,9 @@ public class HelperUser extends HelperBase {
         type(By.cssSelector("#password"), user.getPassword());
     }
 
-    public void submit() {
-        click(By.cssSelector("button[type='submit']"));
 
-    }
 
-    public String getMessage() {
-        pause(2000);
-        WebDriverWait wait = new WebDriverWait(wd, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(wd.findElement(By.cssSelector(".dialog-container"))));
 
-        return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
-    }
 
     public void closeWindow() {
         if (isElementPresent(By.xpath("//button[text()='Ok']"))) {
@@ -94,18 +85,28 @@ public class HelperUser extends HelperBase {
     public void checkPolicyXY() {
 //        wd.manage().window().getSize(); //get size of screen
 //        System.out.println("Wight screen-->" + size.getWight());
-        WebElement label = wd.findElement(By.cssSelector("label[for='terms-of-use']"));
-        Rectangle rect = label.getRect();
-        int w = rect.getWidth();
+       if(!wd.findElement(By.id("terms-of-use")).isSelected())
+       {
+           WebElement label = wd.findElement(By.cssSelector("label[for='terms-of-use']"));
+            Rectangle rect = label.getRect();
+            int w = rect.getWidth();
 
-        int xOffSet = -w / 2;
-        Actions actions = new Actions(wd);
-        actions.moveToElement(label, xOffSet, 0).click().release().perform();
+            int xOffSet = -w / 2;
+            Actions actions = new Actions(wd);
+            actions.moveToElement(label, xOffSet, 0).click().release().perform();
+        }
     }
 
     public String getErrorRegisteredUser() {
         return wd.findElement(By.cssSelector("h2.message")).getText();
 
+    }
+
+    public void login(User user) {
+        openLoginForm();
+        fillLoginForm(user);
+        submit();
+        closeWindow();
     }
 }
 
