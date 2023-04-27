@@ -61,6 +61,7 @@ public class HelperCar extends HelperBase{
 
     public void searchCurrentMonth(String city, String dateFrom, String dateTo) {
         typeCity(city);
+        clearTextBox(By.id("dates"));
         click(By.id("dates"));
         String locatorFrom = "//div[text()=' "+dateFrom.split("/")[1]+" ']";
         click(By.xpath(locatorFrom));
@@ -79,7 +80,9 @@ public class HelperCar extends HelperBase{
 
     public void searchCurrentYear(String city, String dateFrom, String dateTo) {
         typeCity(city);
+        clearTextBox(By.id("dates"));
         click(By.id("dates"));
+
 //        "4/27/2023","6/28/2023"
         LocalDate now = LocalDate.now(); //---> 2023-04-20
         System.out.println(now);//---> 2023-04-20
@@ -111,4 +114,58 @@ public class HelperCar extends HelperBase{
 
         }
     }
+
+    public void searchAnyPeriod(String city, String dateFrom, String dateTo) {
+        typeCity(city);
+        clearTextBox(By.id("dates"));
+        click(By.id("dates"));
+        //        "12/27/2023","2/28/2024"
+        LocalDate now = LocalDate.now(); //---> 2023-04-25
+        System.out.println(now);//---> 2023-04-205
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+        LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/dd/yyyy"));
+        LocalDate to = LocalDate.parse(dateTo,DateTimeFormatter.ofPattern("M/dd/yyyy"));
+
+
+        int diffMonth;
+        int diffYear;
+        diffYear = from.getYear()-year;
+
+        if(diffYear>0) {
+            diffMonth = from.getMonthValue() + 12 - month;
+            clickNextMonthBtn(diffMonth);
+        }
+            else{
+                diffMonth=from.getMonthValue()-month;
+                clickNextMonthBtn(diffMonth);
+            }
+        String locator = String.format("//div[text()=' %s ']",from.getDayOfMonth());
+        click(By.xpath(locator));
+
+        diffYear = to.getYear()- from.getYear();
+        if(diffYear>0){
+            diffMonth=to.getMonthValue()+12-from.getMonthValue();
+            clickNextMonthBtn(diffMonth);
+        }
+        diffMonth = to.getMonthValue()- from.getMonthValue();
+        if(diffMonth>0){
+            clickNextMonthBtn(diffMonth);
+        }
+
+        locator = String.format("//div[text()=' %s ']",to.getDayOfMonth());
+        click(By.xpath(locator));
+    }
+
+
+    public void searchNotValidPeriod(String city, String dateFrom, String dateTo) {
+        typeCity(city);
+        clearTextBox(By.id("dates"));
+       // click(By.id("dates"));
+        type(By.id("dates"),dateFrom+" - "+dateTo);
+      //  click(By.id("dates"));
+    }
+
+
 }

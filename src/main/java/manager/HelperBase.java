@@ -42,6 +42,8 @@ public class HelperBase {
         return list.size()>0;
     }
 
+
+
     public void pause(int millis){
         try {Thread.sleep(millis);
         }
@@ -60,5 +62,24 @@ public class HelperBase {
         wait.until(ExpectedConditions.visibilityOf(wd.findElement(By.cssSelector(".dialog-container"))));
 
         return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
+    }
+    public void clearTextBox(By locator) {
+        WebElement el = wd.findElement(locator);
+        String os = System.getProperty("os.name");
+        System.out.println(os);
+        if (os.startsWith("Win")){
+            el.sendKeys(Keys.CONTROL, "a");
+            }
+        else{
+            el.sendKeys(Keys.COMMAND);
+        }
+        el.sendKeys(Keys.DELETE);
+    }
+
+    public boolean isYallaButtonNotActive() {
+        boolean res = isElementPresent(By.cssSelector("button[disabled]"));
+        WebElement element = wd.findElement(By.cssSelector("button[type='submit']"));
+        boolean result = element.isEnabled();
+        return res && !result;
     }
 }

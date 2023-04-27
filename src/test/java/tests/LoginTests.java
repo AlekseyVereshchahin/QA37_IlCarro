@@ -1,5 +1,6 @@
 package tests;
 
+import manager.DataProviderUser;
 import manager.HelperUser;
 import models.User;
 import org.openqa.selenium.By;
@@ -38,6 +39,16 @@ public class LoginTests extends TestBase {
 
     }
 
+    @Test(dataProvider = "loginFile",dataProviderClass = DataProviderUser.class)
+    public void loginSuccessDP(User user) {
+        app.getHelperUser().openLoginForm();
+        app.getHelperUser().fillLoginForm(user);
+        app.getHelperUser().submit();
+        Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
+        app.getHelperUser().closeWindow();
+
+    }
+
     @Test
     public void loginSuccessModel() {
         app.getHelperUser().openLoginForm();
@@ -57,6 +68,7 @@ public class LoginTests extends TestBase {
         Assert.assertEquals(app.getHelperUser().getErrorText(), "It'snot look like email");
         Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
 
+
     }
 
     @Test
@@ -64,7 +76,7 @@ public class LoginTests extends TestBase {
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm("amaverik281@gmail.com", "Aaaaaaa1");
         app.getHelperUser().submit();
-        Assert.assertEquals(app.getHelperUser().getMessage(), "Login or Password incorrect");
+        Assert.assertEquals(app.getHelperUser().getMessage(), "\"Login or Password incorrect\"");
     }
 
     @Test
@@ -72,7 +84,7 @@ public class LoginTests extends TestBase {
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm("pop@gmail.com", "PopAaaaaaaA1!");
         app.getHelperUser().submit();
-        Assert.assertEquals(app.getHelperUser().getMessage(), "Login or Password incorrect");
+        Assert.assertEquals(app.getHelperUser().getMessage(),"\"Login or Password incorrect\"");
 
 
     }
