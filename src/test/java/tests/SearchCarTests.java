@@ -11,7 +11,7 @@ public class SearchCarTests extends TestBase{
 
     @Test
     public void searchCurrentMonthSuccess(){
-        app.getHelperCar().searchCurrentMonth("Rehovot, Israel","4/27/2023","4/29/2023");
+        app.getHelperCar().searchCurrentMonth("Rehovot, Israel","5/10/2023","5/15/2023");
         app.getHelperCar().submit();
         app.getHelperCar().pause(10000);
         Assert.assertTrue(app.getHelperCar().isListOfCarAppeared());
@@ -42,8 +42,6 @@ public class SearchCarTests extends TestBase{
         Assert.assertTrue(app.getHelperCar().isYallaButtonNotActive());
         Assert.assertEquals(app.getHelperUser().getErrorDateText(),"You can't pick date before today");
     }
-
-
 
 
     @BeforeMethod
